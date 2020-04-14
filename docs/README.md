@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: /link.gif
-heroText: fly的前端学习之路
+heroText: 前端踩坑笔记
 actionText: 快速上手 →
 actionLink: /
 ---
