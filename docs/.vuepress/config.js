@@ -80,13 +80,13 @@ module.exports = {
             '/js/':[
               {
                   title:'js知识点总结',
-                  collapsable: false,
+                  collapsable: true,
                   children:[
                     '',
                   ]
                 }
           ],
-          '/ts':[
+          '/ts/':[
             {
                 title:'ts知识点总结',
                 collapsable: false,
@@ -95,7 +95,7 @@ module.exports = {
                 ]
             },
           ],
-          '/vue':[
+          '/vue/':[
             {
                 title:'vue知识点总结',
                 collapsable: false,
