@@ -191,12 +191,13 @@ function isNaN(n) {
 
  string 因为typeof返回的是字符串，所有typeof类型是string
  
-2.  var a = {};
-    console.log(a instanceof Array) //false 因为a的原型链上没有Array
-    console.log(a instanceof Object) //true
-    var b = []
-    console.log(b instanceof Array) //true 
-    console.log(b instanceof Object) //true 这个是因为a的原型链上最底层是Object 所以也是返回true
+2. 
+var a = {};
+console.log(a instanceof Array) //false 因为a的原型链上没有Array
+console.log(a instanceof Object) //true
+var b = []
+console.log(b instanceof Array) //true 
+console.log(b instanceof Object) //true 这个是因为a的原型链上最底层是Object 所以也是返回true
 
 ```
 
