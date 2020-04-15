@@ -114,3 +114,89 @@ console.log(fn instanceof Function);//true
 ```
 
 ### (4)使用toString判断类型
+
+```js
+console.log(Object.prototype.toString.call(1));  //'[object Number]'
+console.log(Object.prototype.toString.call('1'));//'[object String]'
+console.log(Object.prototype.toString.call(function(){}));  //'[object Function]'
+console.log(Object.prototype.toString.call([1,2,3])); //'[object Array]'
+console.log(Object.prototype.toString.call(undefined)); //'[object Undefined]'
+console.log(Object.prototype.toString.call(null)); //'[object Null]'
+console.log(Object.prototype.toString.call(true)); //'[object Boolean]'
+console.log(Object.prototype.toString.call(Symbol())); //'[object Symbol]'
+console.log(Object.prototype.toString.call(BigInt(10))); //'[object BigInt]'
+function fn(){
+  	console.log(Object.prototype.toString.call(arguments)); //[object Arguments]
+}
+fn();
+```
+
+toString 获取当前call传入值的 [[Class]] 属性值, 然后拼接成 '[object ' + [[Class]] + ']'  这样的字符串并返回. 这个基本上可以判断所有的类型，所以我们可以学习underscore的写法。
+
+```js
+let utils = {}
+let sr = ['Function', 'String', 'Number', 'Symbol','BigInt','Boolean','Array'];
+sr.forEach(name => {
+	utils["is"+name] = function(obj){
+		return Object.prototype.toString.call(obj) === "[object "+name+"]";
+	}
+})
+//通过遍历数组里面的类型，插入到utils里面，以后我们可以通过utils.isFunction()来判断
+console.log(utils.isNumber("1"));//false
+console.log(utils.isString('1'));//true
+console.log(utils.isFunction(function(){}));  //true
+```
+
+### (5)判断类数组
+
+类数组是对象类型，但是里面包含数组的值和数组对应的属性length，函数参数arguments就是一个类数组，我们下面来判断这个类数组。
+
+```js
+var isArrayLike = function(arrObj) {
+    var length = arrObj == null ? void 0 : arrObj["length"];
+    return  typeof length == 'number' && length >= 0 && ( length - 1 ) in arrObj;
+};
+//在上面代码中我们首先判断是否有length属性，并且length属性大于0，然后判断数组的最后一项下标是否存在
+```
+
+### (6)判断NaN
+
+NaN不是一个数字且数据类型为Number，有下面两种判断方式
+
+```
+//1.根据NaN不与任何值相等的属性包含自身来判断
+function isMyNaN(n) {
+    if(n !== n) {
+    	return true;
+    } else {
+    	return false;
+    }
+}
+//2.判断是否是Number，然后通过isNaN原生函数判断
+function isNaN(n) {
+	if(typeof(n) === "number" && isNaN(n)) 
+	{
+		return true;
+	} 
+	else {
+		return false;
+	}
+}
+```
+
+### (8)面试题
+
+```
+1.typeof typeof 10 输出什么?
+
+ string 因为typeof返回的是字符串，所有typeof类型是string
+ 
+2.  var a = {};
+    console.log(a instanceof Array) //false 因为a的原型链上没有Array
+    console.log(a instanceof Object) //true
+    var b = []
+    console.log(b instanceof Array) //true 
+    console.log(b instanceof Object) //true 这个是因为a的原型链上最底层是Object 所以也是返回true
+
+```
+
